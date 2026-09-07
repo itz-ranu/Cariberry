@@ -1,0 +1,561 @@
+{
+  "builtTestProducts" : [
+
+  ],
+  "copyCommands" : {
+
+  },
+  "explicitTargetDependencyImportCheckingMode" : {
+    "none" : {
+
+    }
+  },
+  "generatedSourceTargetSet" : [
+
+  ],
+  "pluginDescriptions" : [
+
+  ],
+  "swiftCommands" : {
+    "C.DesktopPup-arm64-apple-macosx-release.module" : {
+      "executable" : "/Library/Developer/CommandLineTools/usr/bin/swiftc",
+      "fileList" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/sources",
+      "importPath" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/ActivityMonitor.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/App.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/CatView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/CharacterView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/Dialogue.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/DogView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/FoodView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/LaunchAtLogin.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/MenuBar.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/Pet.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/PetWindow.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/Progression.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/RenderSheet.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/Rules.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/SceneView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/Sound.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/StatsView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/Store.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/Theme.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/swift-version--1AB21518FC5DEDBE.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/sources"
+        }
+      ],
+      "isLibrary" : false,
+      "moduleName" : "DesktopPup",
+      "moduleOutputPath" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/Modules/DesktopPup.swiftmodule",
+      "objects" : [
+        "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/ActivityMonitor.swift.o",
+        "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/App.swift.o",
+        "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/CatView.swift.o",
+        "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/CharacterView.swift.o",
+        "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/Dialogue.swift.o",
+        "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/DogView.swift.o",
+        "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/FoodView.swift.o",
+        "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/LaunchAtLogin.swift.o",
+        "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/MenuBar.swift.o",
+        "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/Pet.swift.o",
+        "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/PetWindow.swift.o",
+        "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/Progression.swift.o",
+        "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/RenderSheet.swift.o",
+        "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/Rules.swift.o",
+        "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/SceneView.swift.o",
+        "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/Sound.swift.o",
+        "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/StatsView.swift.o",
+        "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/Store.swift.o",
+        "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/Theme.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx14.0",
+        "-whole-module-optimization",
+        "-num-threads",
+        "8",
+        "-serialize-diagnostics",
+        "-O",
+        "-j8",
+        "-DSWIFT_PACKAGE",
+        "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+        "-module-cache-path",
+        "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/ModuleCache",
+        "-parseable-output",
+        "-Xfrontend",
+        "-entry-point-function-name",
+        "-Xfrontend",
+        "DesktopPup_main",
+        "-swift-version",
+        "5",
+        "-I",
+        "/Library/Developer/CommandLineTools/Library/Developer/Frameworks",
+        "-L",
+        "/Library/Developer/CommandLineTools/Library/Developer/Frameworks",
+        "-plugin-path",
+        "/Library/Developer/CommandLineTools/usr/lib/swift/host/plugins/testing",
+        "-sdk",
+        "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "desktop_pet_caribeery"
+      ],
+      "outputFileMapPath" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/ActivityMonitor.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/App.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/CatView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/CharacterView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/Dialogue.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/DogView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/FoodView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/LaunchAtLogin.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/MenuBar.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/Pet.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/PetWindow.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/Progression.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/RenderSheet.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/Rules.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/SceneView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/Sound.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/StatsView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/Store.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/Theme.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/Modules/DesktopPup.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/ActivityMonitor.swift",
+        "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/App.swift",
+        "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/CatView.swift",
+        "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/CharacterView.swift",
+        "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/Dialogue.swift",
+        "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/DogView.swift",
+        "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/FoodView.swift",
+        "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/LaunchAtLogin.swift",
+        "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/MenuBar.swift",
+        "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/Pet.swift",
+        "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/PetWindow.swift",
+        "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/Progression.swift",
+        "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/RenderSheet.swift",
+        "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/Rules.swift",
+        "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/SceneView.swift",
+        "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/Sound.swift",
+        "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/StatsView.swift",
+        "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/Store.swift",
+        "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/Theme.swift"
+      ],
+      "tempsPath" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build",
+      "wholeModuleOptimization" : true
+    }
+  },
+  "swiftFrontendCommands" : {
+
+  },
+  "swiftTargetScanArgs" : {
+    "DesktopPup" : [
+      "/Library/Developer/CommandLineTools/usr/bin/swiftc",
+      "-module-name",
+      "DesktopPup",
+      "-package-name",
+      "desktop_pet_caribeery",
+      "-c",
+      "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/ActivityMonitor.swift",
+      "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/App.swift",
+      "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/CatView.swift",
+      "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/CharacterView.swift",
+      "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/Dialogue.swift",
+      "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/DogView.swift",
+      "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/FoodView.swift",
+      "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/LaunchAtLogin.swift",
+      "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/MenuBar.swift",
+      "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/Pet.swift",
+      "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/PetWindow.swift",
+      "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/Progression.swift",
+      "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/RenderSheet.swift",
+      "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/Rules.swift",
+      "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/SceneView.swift",
+      "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/Sound.swift",
+      "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/StatsView.swift",
+      "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/Store.swift",
+      "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/Theme.swift",
+      "-I",
+      "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/Modules",
+      "-target",
+      "arm64-apple-macosx14.0",
+      "-whole-module-optimization",
+      "-num-threads",
+      "8",
+      "-serialize-diagnostics",
+      "-O",
+      "-j8",
+      "-DSWIFT_PACKAGE",
+      "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+      "-module-cache-path",
+      "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/ModuleCache",
+      "-parseable-output",
+      "-Xfrontend",
+      "-entry-point-function-name",
+      "-Xfrontend",
+      "DesktopPup_main",
+      "-swift-version",
+      "5",
+      "-I",
+      "/Library/Developer/CommandLineTools/Library/Developer/Frameworks",
+      "-L",
+      "/Library/Developer/CommandLineTools/Library/Developer/Frameworks",
+      "-plugin-path",
+      "/Library/Developer/CommandLineTools/usr/lib/swift/host/plugins/testing",
+      "-sdk",
+      "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "desktop_pet_caribeery",
+      "-driver-use-frontend-path",
+      "/Library/Developer/CommandLineTools/usr/bin/swiftc"
+    ]
+  },
+  "targetDependencyMap" : {
+    "DesktopPup" : [
+
+    ]
+  },
+  "testDiscoveryCommands" : {
+
+  },
+  "testEntryPointCommands" : {
+
+  },
+  "traitConfiguration" : {
+    "default" : {
+
+    }
+  },
+  "writeCommands" : {
+    "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/ActivityMonitor.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/App.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/CatView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/CharacterView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/Dialogue.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/DogView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/FoodView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/LaunchAtLogin.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/MenuBar.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/Pet.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/PetWindow.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/Progression.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/RenderSheet.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/Rules.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/SceneView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/Sound.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/StatsView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/Store.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/Sources/DesktopPup/Theme.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/sources"
+    },
+    "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.product/Objects.LinkFileList" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<link-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/ActivityMonitor.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/App.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/CatView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/CharacterView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/Dialogue.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/DogView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/FoodView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/LaunchAtLogin.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/MenuBar.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/Pet.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/PetWindow.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/Progression.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/RenderSheet.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/Rules.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/SceneView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/Sound.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/StatsView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/Store.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.build/Theme.swift.o"
+        }
+      ],
+      "outputFilePath" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/DesktopPup.product/Objects.LinkFileList"
+    },
+    "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/swift-version--1AB21518FC5DEDBE.txt" : {
+      "alwaysOutOfDate" : true,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<swift-get-version>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Library/Developer/CommandLineTools/usr/bin/swiftc"
+        }
+      ],
+      "outputFilePath" : "/Users/bharat/Desktop/code/desktop pet caribeery/.build/arm64-apple-macosx/release/swift-version--1AB21518FC5DEDBE.txt"
+    }
+  }
+}
