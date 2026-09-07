@@ -50,7 +50,13 @@ cat > "$APP/Contents/Info.plist" <<PLIST
 </plist>
 PLIST
 # Ad-hoc signature keeps macOS from re-asking for permissions on every rebuild.
-codesign --force --sign - "$APP" >/dev/null 2>&1 || true
+# `|| true` used to swallow this entirely, including a real failure, which would
+# make the build look successful while shipping an unsigned app that Gatekeeper
+# rejects. Show the actual error and stop instead.
+if ! codesign --force --sign - "$APP"; then
+  echo " codesign failed — see the error above. The app was assembled but is not signed." >&2
+  exit 1
+fi
 
 echo " built $(pwd)/$APP"
 echo "  run it with:  open \"$APP\""

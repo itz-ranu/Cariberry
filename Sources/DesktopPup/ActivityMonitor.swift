@@ -27,6 +27,7 @@ final class ActivityMonitor {
     private let queue = DispatchQueue(label: "pup.applescript")
     private let probe = BrowserProbe()
     private var querying = false
+    private var queryGeneration = 0
     private var lastBrowserBundle = ""
 
     func start() {
@@ -73,12 +74,16 @@ final class ActivityMonitor {
         guard !querying else { return }
         guard let source = script(for: bundle) else { return }
         querying = true
+        queryGeneration += 1
+        let generation = queryGeneration
         let probe = self.probe
         queue.async { [weak self] in
             let (text, denied) = probe.run(bundle: bundle, source: source)
             DispatchQueue.main.async {
                 MainActor.assumeIsolated {
-                    guard let self else { return }
+                    // a stale completion from a query the timeout below already gave
+                    // up on shouldn't clobber whatever's happened since
+                    guard let self, self.queryGeneration == generation else { return }
                     self.querying = false
                     if denied { self.automationDenied = true; return }
                     guard !text.isEmpty else { return }
@@ -88,6 +93,15 @@ final class ActivityMonitor {
                     self.lastTitle = parts.count > 1 ? parts[1] : ""
                 }
             }
+        }
+        // NSAppleScript has no cancellation API, so a hung/beachballed browser can
+        // block `probe.run` indefinitely. Without this, `querying` would stay true
+        // forever and every future poll would silently no-op until the app restarts.
+        // The generation check means this can't stomp on a newer query that started
+        // after this one finally did (or never) return.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) { [weak self] in
+            guard let self, self.queryGeneration == generation else { return }
+            self.querying = false
         }
     }
 

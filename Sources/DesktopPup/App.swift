@@ -111,6 +111,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         pet.xp = saved.xp
         pet.lastXPDay = saved.lastXPDay
         pet.dailyAppTime = saved.dailyAppTime
+        // Store.load() already dropped this if it would have finished while the app
+        // was closed, so anything left here is a genuinely still-running timer to
+        // resume exactly where it was
+        pet.timerEndsAt = saved.timerEndsAt
+        pet.timerIsBreak = saved.timerIsBreak
+        pet.timerTotal = saved.timerTotal
 
         _ = RuleStore.shared
 

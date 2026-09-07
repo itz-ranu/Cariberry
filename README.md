@@ -371,6 +371,36 @@ To reshape a pet, edit the constants in her `enum A` and re-run
 
 ## Privacy
 
-There is no networking code in this app. Nothing about you leaves your machine.
-What she sees goes into the save file in your own Application Support folder and
-nowhere else.
+There is no networking code in this app — no URL sessions, no telemetry, no
+server component. Nothing is ever sent anywhere. But she does keep a local
+record of what she's watched, so here's exactly what that is:
+
+**What's stored, and where:**
+
+```
+~/Library/Application Support/DesktopPup/pet.json     her stats, XP, and activity history
+~/Library/Application Support/DesktopPup/rules.json   your custom focus rules
+```
+
+**What's in `pet.json`, specifically:** app names and site domains (never full
+URLs or page content) and how long you spent in each, grouped by the rule
+category that matched (e.g. "Coding", "Social media"); your last 7-30 days of
+focused minutes per day; and lifetime totals per category and per app. None of
+it is a browsing history — just durations attached to a name.
+
+**Retention:** the day-by-day breakdown (`dailyFocus`, `dailyAppTime`) is
+automatically pruned to the last 30 days. The lifetime totals (`siteTime`,
+`categoryTime`) are kept indefinitely, the same way the "Lifetime focus"
+number in the stats window is.
+
+**Deleting it:** quit the app and delete `pet.json` — that wipes her stats,
+XP, and levels back to zero. `rules.json` is independent of that; delete it
+separately (or use **Settings ▸ Reset rules to defaults**) if you want your
+custom rules gone too.
+
+**Browser awareness** (off by default) reads the URL and title of your
+frontmost browser tab via macOS's Automation permission, so it can tell a work
+site from a distraction. That permission is broader than what the app actually
+uses it for — macOS grants "can send this app Apple Events," not "can only
+read tab titles" — so it's worth knowing it exists even though the code only
+ever reads, never acts on, what it sees.

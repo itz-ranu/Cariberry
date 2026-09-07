@@ -22,13 +22,20 @@ struct PetSave: Codable {
     /// start-of-day -> domain/app -> seconds spent, every app, every kind included:
     /// see the comment on `Pet.dailyAppTime` for why this exists alongside siteTime.
     var dailyAppTime: [Date: [String: Double]] = [:]
+    // a running focus timer used to just vanish on quit/relaunch with no trace it
+    // ever existed. persisting these three lets Store.load() resume it if it's
+    // still genuinely in progress, or quietly drop it if time has already run out.
+    var timerEndsAt: Date? = nil
+    var timerIsBreak = false
+    var timerTotal: Double = 0
 
     init(name: String = "Cariberry", hunger: Double = 0.85, happiness: Double = 0.8,
          energy: Double = 0.9, affection: Double = 0.5, totalFocusMinutes: Double = 0,
          treatsEaten: Int = 0, barksGiven: Int = 0, born: Date = Date(), lastSeen: Date = Date(),
          siteTime: [String: Double] = [:], dailyFocus: [Date: Double] = [:],
          categoryTime: [String: Double] = [:], xp: Double = 0,
-         lastXPDay: Date = .distantPast, dailyAppTime: [Date: [String: Double]] = [:]) {
+         lastXPDay: Date = .distantPast, dailyAppTime: [Date: [String: Double]] = [:],
+         timerEndsAt: Date? = nil, timerIsBreak: Bool = false, timerTotal: Double = 0) {
         self.name = name
         self.hunger = hunger
         self.happiness = happiness
@@ -45,6 +52,9 @@ struct PetSave: Codable {
         self.xp = xp
         self.lastXPDay = lastXPDay
         self.dailyAppTime = dailyAppTime
+        self.timerEndsAt = timerEndsAt
+        self.timerIsBreak = timerIsBreak
+        self.timerTotal = timerTotal
     }
 
     // A plain `Codable` struct fails to decode its *entire* save the moment one field
@@ -69,6 +79,9 @@ struct PetSave: Codable {
         xp = try c.decodeIfPresent(Double.self, forKey: .xp) ?? 0
         lastXPDay = try c.decodeIfPresent(Date.self, forKey: .lastXPDay) ?? .distantPast
         dailyAppTime = try c.decodeIfPresent([Date: [String: Double]].self, forKey: .dailyAppTime) ?? [:]
+        timerEndsAt = try c.decodeIfPresent(Date.self, forKey: .timerEndsAt)
+        timerIsBreak = try c.decodeIfPresent(Bool.self, forKey: .timerIsBreak) ?? false
+        timerTotal = try c.decodeIfPresent(Double.self, forKey: .timerTotal) ?? 0
     }
 }
 
@@ -97,6 +110,16 @@ enum Store {
             if let cutoff = Calendar.current.date(byAdding: .day, value: -30, to: Date()) {
                 s.dailyFocus = s.dailyFocus.filter { $0.key >= cutoff }
                 s.dailyAppTime = s.dailyAppTime.filter { $0.key >= cutoff }
+            }
+
+            // a timer that would already be over by now doesn't get resumed or
+            // retroactively "finished" (that would fire its celebration/break-chaining
+            // the moment the app opens, using nudge timing from a session that's long
+            // gone) — it just quietly wasn't running
+            if let end = s.timerEndsAt, end <= Date() {
+                s.timerEndsAt = nil
+                s.timerIsBreak = false
+                s.timerTotal = 0
             }
             return s
         } catch {

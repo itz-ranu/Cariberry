@@ -122,7 +122,10 @@ final class Pet: ObservableObject {
     // focus timer (pomodoro)
     @Published var timerEndsAt: Date?
     @Published var timerIsBreak = false
-    private var timerTotal: TimeInterval = 0
+    // not private: App.swift/PetWindow.swift read and write this for persistence,
+    // same as lastXPDay below, so a running focus timer survives a quit and relaunch
+    // instead of silently vanishing
+    var timerTotal: TimeInterval = 0
     private var lastTimerNudge: Date = .distantPast
 
     var moodOverride: (Emotion, Date)?

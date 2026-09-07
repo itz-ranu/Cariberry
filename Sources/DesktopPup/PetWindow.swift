@@ -298,7 +298,10 @@ final class PetController {
                            categoryTime: pet.categoryTime,
                            xp: pet.xp,
                            lastXPDay: pet.lastXPDay,
-                           dailyAppTime: pet.dailyAppTime))
+                           dailyAppTime: pet.dailyAppTime,
+                           timerEndsAt: pet.timerEndsAt,
+                           timerIsBreak: pet.timerIsBreak,
+                           timerTotal: pet.timerTotal))
     }
 
     func callPetToCursor() {

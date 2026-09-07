@@ -254,11 +254,20 @@ struct StatsView: View {
         )
     }
 
-    /// A soft ring instead of another bar list: one glanceable number for "was today
-    /// good or not," with the two biggest categories underneath as tiny quiet pills.
+    /// A soft ring for the split between recognized work and recognized distraction,
+    /// with the two biggest categories underneath as tiny quiet pills.
+    ///
+    /// This is deliberately NOT called "Focus quality": the denominator only counts
+    /// time a rule actually classified as work or distraction. An unrecognized
+    /// productive app (or just idle/neutral time) is invisible to this number, so it
+    /// can't honestly claim to measure the whole day, only the apps she has rules for.
     private var focusRing: some View {
         VStack(spacing: 12) {
-            sectionHeader("Focus quality", scope: "all time")
+            sectionHeader("Work vs. distraction", scope: "all time")
+            Text("of the apps she has rules for, not your whole day")
+                .font(.system(size: 10, weight: .medium, design: .rounded))
+                .foregroundStyle(UI.inkSoft.opacity(0.7))
+                .frame(maxWidth: .infinity, alignment: .leading)
 
             let ratio = focusRatio
             ZStack {

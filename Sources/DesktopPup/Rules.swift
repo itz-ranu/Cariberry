@@ -147,7 +147,26 @@ final class RuleStore {
             book = try JSONDecoder().decode(RuleBook.self, from: data)
         } catch {
             rulesLogger.error("Could not load rules: \(error.localizedDescription, privacy: .public)")
+            // a broken file used to just get silently overwritten with defaults here,
+            // permanently destroying whatever custom rules the person had written.
+            // back it up first so a stray comma in rules.json never costs them their
+            // whole rule set.
+            backupBrokenFile()
             writeDefaults()
+        }
+    }
+
+    /// Copies the unreadable rules.json aside (e.g. `rules.broken-2026-09-08T121500.json`)
+    /// before it gets replaced with defaults, so nothing the person wrote is lost.
+    private func backupBrokenFile() {
+        let stamp = ISO8601DateFormatter().string(from: Date())
+            .replacingOccurrences(of: ":", with: "")
+        let backupURL = Store.dir.appendingPathComponent("rules.broken-\(stamp).json")
+        do {
+            try FileManager.default.copyItem(at: url, to: backupURL)
+            rulesLogger.notice("Backed up unreadable rules.json to \(backupURL.lastPathComponent, privacy: .public)")
+        } catch {
+            rulesLogger.error("Could not back up broken rules.json: \(error.localizedDescription, privacy: .public)")
         }
     }
 
