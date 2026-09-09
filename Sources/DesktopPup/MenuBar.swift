@@ -124,6 +124,7 @@ final class MenuBarController: NSObject, NSMenuDelegate {
         let settings = NSMenu()
         check(settings, "Focus coaching", Prefs.focusCoaching, #selector(toggleCoaching))
         check(settings, "Browser awareness (Reels detection)", Prefs.browserAwareness, #selector(toggleBrowser))
+        check(settings, "Auto-close Reels tabs (needs Browser awareness)", Prefs.autoCloseReels, #selector(toggleAutoClose))
         check(settings, "Sounds", Prefs.sounds, #selector(toggleSounds))
         check(settings, "Stay above fullscreen apps", Prefs.aboveFullscreen, #selector(toggleFullscreen))
         check(settings, "Roam around the screen", Prefs.roams, #selector(toggleRoams))
@@ -334,6 +335,15 @@ final class MenuBarController: NSObject, NSMenuDelegate {
             pet.say("sniffing your tabs now 👃 (say yes to the macOS prompt)", .alert, 6)
         } else {
             pet.say("ok, tabs are private 🙈", .neutral, 3)
+        }
+    }
+
+    @objc private func toggleAutoClose() {
+        Prefs.autoCloseReels.toggle()
+        if Prefs.autoCloseReels {
+            pet.say("one warning, then I'm closing the tab myself 😤🐾", .alert, 5)
+        } else {
+            pet.say("ok, I'll just bark from now on 🐕", .neutral, 3)
         }
     }
 

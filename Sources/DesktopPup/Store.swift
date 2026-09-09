@@ -158,6 +158,13 @@ enum Prefs {
         get { bool("browserAwareness", false) }
         set { d.set(newValue, forKey: "browserAwareness") }
     }
+    /// Off by default: closing a tab is destructive (lost scroll position, an
+    /// unsubmitted form, whatever was on it), so unlike barking it needs a
+    /// deliberate opt-in, not just Browser awareness being on.
+    static var autoCloseReels: Bool {
+        get { bool("autoCloseReels", false) }
+        set { d.set(newValue, forKey: "autoCloseReels") }
+    }
     static var sounds: Bool {
         get { bool("sounds", true) }
         set { d.set(newValue, forKey: "sounds") }

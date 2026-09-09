@@ -78,7 +78,7 @@ final class ActivityMonitor {
         let generation = queryGeneration
         let probe = self.probe
         queue.async { [weak self] in
-            let (text, denied) = probe.run(bundle: bundle, source: source)
+            let (text, denied, _) = probe.run(bundle: bundle, source: source)
             DispatchQueue.main.async {
                 MainActor.assumeIsolated {
                     // a stale completion from a query the timeout below already gave
@@ -103,6 +103,48 @@ final class ActivityMonitor {
             guard let self, self.queryGeneration == generation else { return }
             self.querying = false
         }
+    }
+
+    // MARK: Closing a tab
+
+    /// Closes whatever tab is currently active in the last browser she saw you in.
+    /// Uses the browser's own "close this tab" AppleScript command rather than
+    /// simulating a click on the visual close button: a simulated click has to guess
+    /// a screen coordinate that shifts with tab count, window size and Retina
+    /// scaling, and can miss onto whatever else happens to be under that pixel. This
+    /// targets the actual tab object, so it can't misfire onto the wrong thing.
+    func closeCurrentTab(completion: @escaping (Bool) -> Void) {
+        guard Prefs.browserAwareness, !lastBrowserBundle.isEmpty,
+              let source = closeScript(for: lastBrowserBundle) else {
+            completion(false)
+            return
+        }
+        let probe = self.probe
+        // a distinct cache key from the read-probe's, so the two scripts (read vs.
+        // close) for the same browser never collide in BrowserProbe's cache
+        let cacheKey = "close:" + lastBrowserBundle
+        queue.async {
+            let (_, denied, ok) = probe.run(bundle: cacheKey, source: source)
+            DispatchQueue.main.async { completion(ok && !denied) }
+        }
+    }
+
+    private func closeScript(for bundle: String) -> String? {
+        if bundle == "com.apple.safari" {
+            return """
+            tell application id "com.apple.Safari"
+                if (count of windows) is 0 then return
+                close current tab of front window
+            end tell
+            """
+        }
+        guard let name = ActivityMonitor.browsers[bundle] else { return nil }
+        return """
+        tell application "\(name)"
+            if (count of windows) is 0 then return
+            close active tab of front window
+        end tell
+        """
     }
 
     private func script(for bundle: String) -> String? {
@@ -134,12 +176,12 @@ final class ActivityMonitor {
 private final class BrowserProbe: @unchecked Sendable {
     private var cache: [String: NSAppleScript] = [:]
 
-    func run(bundle: String, source: String) -> (text: String, denied: Bool) {
+    func run(bundle: String, source: String) -> (text: String, denied: Bool, ok: Bool) {
         let script: NSAppleScript
         if let cached = cache[bundle] {
             script = cached
         } else {
-            guard let fresh = NSAppleScript(source: source) else { return ("", false) }
+            guard let fresh = NSAppleScript(source: source) else { return ("", false, false) }
             var compileError: NSDictionary?
             fresh.compileAndReturnError(&compileError)
             cache[bundle] = fresh
@@ -148,6 +190,6 @@ private final class BrowserProbe: @unchecked Sendable {
         var err: NSDictionary?
         let result = script.executeAndReturnError(&err)
         let code = err?[NSAppleScript.errorNumber] as? Int
-        return (result.stringValue ?? "", code == -1743 || code == -1728)
+        return (result.stringValue ?? "", code == -1743 || code == -1728, err == nil)
     }
 }

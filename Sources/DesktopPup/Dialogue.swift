@@ -103,6 +103,15 @@ enum Dialogue {
         "we said 5 more minutes… 20 minutes ago 😤",
     ]
 
+    /// Said right after she actually closes a Reels tab herself (Settings ▸
+    /// Auto-close Reels tabs). She already warned once before this happens.
+    static let closedTab = [
+        "closed it! you can thank me later 😤🐾",
+        "did that for you 💪 you're welcome",
+        "gone! back to it 🐕",
+        "*proudly closes the tab* there. done.",
+    ]
+
     static let backToWork = [
         "GOOD HUMAN 🐾 I knew you had it in you",
         "yesss that's my human 💗",

@@ -131,6 +131,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         monitor.onVerdict = { [weak self] verdict, dt in
             self?.pet.observe(verdict, dt: dt)
         }
+        pet.onCloseReelsTab = { [weak self] in
+            self?.monitor.closeCurrentTab { [weak self] closed in
+                guard closed, let pet = self?.pet else { return }
+                pet.say(Dialogue.closedTab.randomElement()!, .proud, 3)
+                pet.emit(.sparkle, count: 6, at: Stage.aura, spread: 40)
+            }
+        }
         monitor.start()
 
         LaunchAtLogin.syncToStoredPreference()

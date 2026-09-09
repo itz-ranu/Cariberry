@@ -147,6 +147,11 @@ final class Pet: ObservableObject {
     var onYip: (() -> Void)?
     var onMunch: (() -> Void)?
     var onWhine: (() -> Void)?
+    /// Settings ▸ Auto-close Reels tabs. Fired from `scold()` once she's already
+    /// warned about a Reels tab and it's still open. Pet has no direct access to
+    /// AppleScript/ActivityMonitor, so this is wired up in App.swift the same way
+    /// the sound hooks above are.
+    var onCloseReelsTab: (() -> Void)?
 
     // MARK: Derived
 
@@ -798,6 +803,13 @@ final class Pet: ObservableObject {
         say(line, .angry, v.severity >= 2 ? 5 : 4)
         emit(.anger, count: v.severity >= 2 ? 6 : 3, at: Stage.aura, spread: 45)
         if v.severity >= 2 { onBark?() } else { onWhine?() }
+
+        // one warning bark first, then: if it's still a Reels tab and she hasn't
+        // been left alone, she closes it herself. `== 2` (not `>=`) so this only
+        // ever fires once per escalation streak, not every 25s if it keeps failing
+        if scoldCount == 2, Prefs.autoCloseReels, v.ruleName == "Reels & short-form video" {
+            onCloseReelsTab?()
+        }
 
         // escalate: 45s, then 35s, then every 25s until they behave
         let gap = max(25.0, 55.0 - Double(scoldCount) * 10)
