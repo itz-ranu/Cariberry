@@ -240,6 +240,12 @@ struct CatView: View {
             ctx.rotate(by: .degrees(-8))
             ctx.translateBy(x: -Design.centerX, y: -Design.ground)
         }
+        if pose.tapping {
+            let raise = tapRaise(pose.tapPhase)
+            ctx.translateBy(x: Design.centerX, y: Design.ground)
+            ctx.rotate(by: .degrees(-9 * raise))
+            ctx.translateBy(x: -Design.centerX, y: -Design.ground)
+        }
 
         let lift = bob
         var body = ctx
@@ -281,6 +287,10 @@ struct CatView: View {
             if pose.dangling { angle = sin(pose.phase * 3 + Double(i)) * 12 + (i < 2 ? 8 : -8) }
             if pose.sit && back { angle = i == 0 ? 62 : 56 }
             if pose.stretching && !back { angle = 58 }   // front legs bow forward and down
+            if pose.tapping && !back {
+                let raise = tapRaise(pose.tapPhase)
+                angle = i == 3 ? -95 * raise : 10 * raise
+            }
 
             var c = ctx
             if angle != 0 {
@@ -322,6 +332,8 @@ struct CatView: View {
         let tilt: Double
         if pose.stretching {
             tilt = 20 + sin(pose.phase * 3) * 2
+        } else if pose.tapping {
+            tilt = -16 * tapRaise(pose.tapPhase)
         } else if pose.sniffing {
             tilt = 30 + sin(pose.phase * 5) * 4
         } else if pose.grooming {
@@ -348,6 +360,7 @@ struct CatView: View {
         // extra bounce for the head so it lags the body a touch
         c.translateBy(x: 0, y: sin(gait - 0.6) * 1.5 * pose.walk)
         if pose.stretching { c.translateBy(x: 4, y: 10) }
+        else if pose.tapping { c.translateBy(x: 6 * tapRaise(pose.tapPhase), y: 0) }
         else if pose.sniffing { c.translateBy(x: 2, y: 7) }
 
         drawEar(c, at: A.earL, mirrored: true)

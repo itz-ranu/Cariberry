@@ -103,6 +103,14 @@ enum Dialogue {
         "we said 5 more minutes… 20 minutes ago 😤",
     ]
 
+    /// Said as she reaches for the close button, right before `closedTab` below.
+    static let tapClose = [
+        "on it! closing that myself 🐾",
+        "watch this 👀",
+        "I got it, I got it—",
+        "*reaches for the ✕*",
+    ]
+
     /// Said right after she actually closes a Reels tab herself (Settings ▸
     /// Auto-close Reels tabs). She already warned once before this happens.
     static let closedTab = [

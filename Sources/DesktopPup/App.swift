@@ -138,6 +138,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 pet.emit(.sparkle, count: 6, at: Stage.aura, spread: 40)
             }
         }
+        pet.onTapSound = { SoundKit.shared.click() }
         monitor.start()
 
         LaunchAtLogin.syncToStoredPreference()

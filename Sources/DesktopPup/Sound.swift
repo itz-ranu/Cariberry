@@ -122,6 +122,13 @@ final class SoundKit {
             play("happy_cat") { Synth.purr(dur: 0.65, gain: 0.5) }
         }
     }
+
+    /// A short, satisfying UI-click: the moment her paw lands on the close button
+    /// (Settings ▸ Auto-close Reels tabs). Same for both species — this is a click
+    /// on a button, not a vocalisation.
+    func click() {
+        play("ui_click") { Synth.click() }
+    }
 }
 
 private enum Synth {
@@ -230,6 +237,25 @@ private enum Synth {
             lp += (s - lp) * 0.6
             let env = min(1, t / 0.03) * min(1, (dur - t) / 0.12)
             out[i] = Float(lp * env * gain * 0.5)
+        }
+        return out
+    }
+
+    /// A crisp little "tock": a fast-decaying high tone plus a touch of noise for
+    /// texture, the same shape a UI click/tap sound effect usually has.
+    static func click() -> [Float] {
+        let dur = 0.07
+        let n = Int(dur * sr)
+        var out = [Float](repeating: 0, count: n)
+        var phase = 0.0
+        for i in 0..<n {
+            let t = Double(i) / sr
+            let u = t / dur
+            phase += 1350.0 / sr
+            var s = sin(2 * .pi * phase) * 0.7
+            s += Double.random(in: -1...1) * 0.15 * exp(-u * 14)
+            let env = exp(-u * 24)
+            out[i] = Float(s * env * 0.55)
         }
         return out
     }

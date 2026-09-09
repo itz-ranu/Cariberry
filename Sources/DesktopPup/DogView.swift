@@ -17,6 +17,18 @@ struct DogPose {
     var sniffing: Bool = false     // nose to the ground
     var grooming: Bool = false     // cat's signature: paw-lick and ear wipe
     var collarTier: Int = 0        // 0 = none, 1...5 = earned collar tiers
+    var tapping: Bool = false      // reaching out to tap the Reels close button
+    var tapPhase: Double = 0       // 0 = at rest, mid = fully reached and pressing, 1 = retracted
+}
+
+/// Shapes the one-shot reach-and-press arc of `tapping`: eases up to a held peak
+/// (the moment the paw is actually on the button), then eases back down. Shared by
+/// both species so the gesture reads the same regardless of who's doing it.
+func tapRaise(_ phase: Double) -> Double {
+    if phase < 0.4 { let t = phase / 0.4; return 1 - (1 - t) * (1 - t) }
+    if phase < 0.6 { return 1 }
+    let t = (phase - 0.6) / 0.4
+    return max(0, 1 - t * t)
 }
 
 /// The collar she earns by levelling up: a band across the chest with a little tag
@@ -276,6 +288,12 @@ struct DogView: View {
             ctx.rotate(by: .degrees(-8))
             ctx.translateBy(x: -Design.centerX, y: -Design.ground)
         }
+        if pose.tapping {
+            let raise = tapRaise(pose.tapPhase)
+            ctx.translateBy(x: Design.centerX, y: Design.ground)
+            ctx.rotate(by: .degrees(-9 * raise))
+            ctx.translateBy(x: -Design.centerX, y: -Design.ground)
+        }
 
         let lift = bob
         var body = ctx
@@ -316,6 +334,12 @@ struct DogView: View {
             if pose.dangling { angle = sin(pose.phase * 3 + Double(i)) * 12 + (i < 2 ? 8 : -8) }
             if pose.sit && back { angle = i == 0 ? 62 : 56 }
             if pose.stretching && !back { angle = 58 }   // front legs bow forward and down
+            if pose.tapping && !back {
+                // the near paw reaches up and forward to poke the button; the far
+                // paw braces down a little so the weight shift still reads
+                let raise = tapRaise(pose.tapPhase)
+                angle = i == 3 ? -95 * raise : 10 * raise
+            }
 
             var c = ctx
             if angle != 0 {
@@ -357,6 +381,8 @@ struct DogView: View {
         let tilt: Double
         if pose.stretching {
             tilt = 20 + sin(pose.phase * 3) * 2
+        } else if pose.tapping {
+            tilt = -16 * tapRaise(pose.tapPhase)   // leans into the reach, determined
         } else if pose.sniffing {
             tilt = 30 + sin(pose.phase * 5) * 4
         } else {
@@ -380,6 +406,7 @@ struct DogView: View {
         // extra bounce for the head so it lags the body a touch
         c.translateBy(x: 0, y: sin(gait - 0.6) * 1.5 * pose.walk)
         if pose.stretching { c.translateBy(x: 4, y: 10) }
+        else if pose.tapping { c.translateBy(x: 6 * tapRaise(pose.tapPhase), y: 0) }
         else if pose.sniffing { c.translateBy(x: 2, y: 7) }
 
         drawEar(c, at: A.earL, mirrored: true)

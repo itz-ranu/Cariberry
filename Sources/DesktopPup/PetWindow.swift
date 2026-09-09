@@ -241,6 +241,9 @@ final class PetController {
     }
 
     private func updateLook() {
+        // while she's reaching for the Reels close button, she's looking at the
+        // button, not the cursor — performCloseTap() drives `look` itself
+        guard pet.act != .tap else { return }
         let mouse = NSEvent.mouseLocation
         let origin = panel.frame.origin
         let headScreen = CGPoint(x: origin.x + Stage.head.x,

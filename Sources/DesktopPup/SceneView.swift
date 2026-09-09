@@ -27,9 +27,18 @@ struct SceneView: View {
                     .allowsHitTesting(false)
             }
 
+            if let pos = pet.closeButtonAt {
+                CloseButtonProp(pressed: pet.closeButtonPressed)
+                    .frame(width: 24, height: 24)
+                    .position(pos)
+                    .transition(.scale(scale: 0.3, anchor: .center).combined(with: .opacity))
+                    .allowsHitTesting(false)
+            }
+
             bubbleZone
         }
         .frame(width: Stage.size.width, height: Stage.size.height)
+        .animation(.spring(response: 0.24, dampingFraction: 0.58), value: pet.closeButtonAt)
     }
 
     private var bubbleZone: some View {
@@ -104,6 +113,29 @@ struct Triangle: Shape {
         p.addLine(to: CGPoint(x: r.midX, y: r.maxY))
         p.closeSubpath()
         return p
+    }
+}
+
+/// The little red "✕" she taps during Settings ▸ Auto-close Reels tabs. Purely
+/// decorative — the real close happens over AppleScript — but this is what makes
+/// the animation actually read as "she clicked the close button" rather than just
+/// a paw waving in the air.
+struct CloseButtonProp: View {
+    var pressed: Bool
+
+    var body: some View {
+        ZStack {
+            Circle()
+                .fill(RadialGradient(
+                    colors: [Color(red: 1.0, green: 0.45, blue: 0.42), Color(red: 0.86, green: 0.20, blue: 0.23)],
+                    center: UnitPoint(x: 0.35, y: 0.3), startRadius: 1, endRadius: 15))
+                .shadow(color: .black.opacity(0.22), radius: 2.5, y: 1.5)
+            Image(systemName: "xmark")
+                .font(.system(size: 10, weight: .heavy))
+                .foregroundStyle(.white)
+        }
+        .scaleEffect(pressed ? 0.7 : 1)
+        .animation(.spring(response: 0.13, dampingFraction: 0.45), value: pressed)
     }
 }
 

@@ -119,14 +119,74 @@ final class ActivityMonitor {
             completion(false)
             return
         }
+        // captured before the close fires, so `undo()` has something to reopen —
+        // closing a tab is destructive, so every auto-close leaves a way back
+        let closingBundle = lastBrowserBundle
+        let closingURL = lastPage
+        let closingTitle = lastTitle
         let probe = self.probe
         // a distinct cache key from the read-probe's, so the two scripts (read vs.
         // close) for the same browser never collide in BrowserProbe's cache
         let cacheKey = "close:" + lastBrowserBundle
-        queue.async {
+        queue.async { [weak self] in
             let (_, denied, ok) = probe.run(bundle: cacheKey, source: source)
-            DispatchQueue.main.async { completion(ok && !denied) }
+            DispatchQueue.main.async {
+                MainActor.assumeIsolated {
+                    let success = ok && !denied
+                    if success, !closingURL.isEmpty {
+                        self?.lastClosedTab = (url: closingURL, title: closingTitle,
+                                                bundle: closingBundle, closedAt: Date())
+                    }
+                    completion(success)
+                }
+            }
         }
+    }
+
+    /// What she just auto-closed, so long as it's still within the undo window —
+    /// `nil` once too much time has passed or nothing's been undone yet.
+    private(set) var lastClosedTab: (url: String, title: String, bundle: String, closedAt: Date)?
+    private let undoWindow: TimeInterval = 45
+
+    /// A short label for the "Reopen …" menu item, or nil if there's nothing
+    /// (recent enough) to offer undoing.
+    var undoLabel: String? {
+        guard let last = lastClosedTab, Date().timeIntervalSince(last.closedAt) < undoWindow else { return nil }
+        return last.title.isEmpty ? last.url : last.title
+    }
+
+    /// Reopens whatever tab was last auto-closed, as a new tab in the same browser.
+    /// Best-effort: if the browser's since quit or the window's gone, this just
+    /// silently does nothing rather than erroring.
+    func undoLastClose() {
+        guard let last = lastClosedTab, undoLabel != nil,
+              let source = reopenScript(for: last.bundle, url: last.url) else { return }
+        lastClosedTab = nil
+        let probe = self.probe
+        queue.async {
+            _ = probe.run(bundle: "reopen:" + last.bundle, source: source)
+        }
+    }
+
+    private func reopenScript(for bundle: String, url: String) -> String? {
+        // URLs from `lastPage` never contain a literal quote in practice, but escape
+        // defensively anyway since this string gets spliced straight into AppleScript
+        let escaped = url.replacingOccurrences(of: "\"", with: "\\\"")
+        if bundle == "com.apple.safari" {
+            return """
+            tell application id "com.apple.Safari"
+                if (count of windows) is 0 then make new document
+                tell front window to make new tab with properties {URL:"\(escaped)"}
+            end tell
+            """
+        }
+        guard let name = ActivityMonitor.browsers[bundle] else { return nil }
+        return """
+        tell application "\(name)"
+            if (count of windows) is 0 then make new window
+            tell front window to make new tab with properties {URL:"\(escaped)"}
+        end tell
+        """
     }
 
     private func closeScript(for bundle: String) -> String? {

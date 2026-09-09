@@ -117,6 +117,12 @@ final class MenuBarController: NSObject, NSMenuDelegate {
             info(menu, "⚠︎ macOS denied browser access — allow it in")
             info(menu, "   Settings ▸ Privacy ▸ Automation")
         }
+        if let label = monitor.undoLabel {
+            let undo = NSMenuItem(title: "↩︎ Reopen \"\(label.prefix(40))\"",
+                                  action: #selector(undoLastClose), keyEquivalent: "")
+            undo.target = self
+            menu.addItem(undo)
+        }
         add(menu, "View stats", "📊", #selector(showStats), key: "")
 
         menu.addItem(.separator())
@@ -345,6 +351,11 @@ final class MenuBarController: NSObject, NSMenuDelegate {
         } else {
             pet.say("ok, I'll just bark from now on 🐕", .neutral, 3)
         }
+    }
+
+    @objc private func undoLastClose() {
+        monitor.undoLastClose()
+        pet.say("brought it back 🐾", .shy, 2.5)
     }
 
     @objc private func toggleQuietHours() {

@@ -255,6 +255,9 @@ private struct SpeciesCheckView: View {
         Cell(label: "dog walk", species: .dog, pose: DogPose(emotion: .happy, phase: 0.3, walk: 1)),
         Cell(label: "dog stretch", species: .dog, pose: DogPose(emotion: .happy, phase: 0.35, stretching: true)),
         Cell(label: "dog sniff", species: .dog, pose: DogPose(emotion: .curious, phase: 0.4, sniffing: true)),
+        Cell(label: "dog tap: reach", species: .dog, pose: DogPose(emotion: .alert, phase: 0.4, tapping: true, tapPhase: 0.2)),
+        Cell(label: "dog tap: press", species: .dog, pose: DogPose(emotion: .alert, phase: 0.4, tapping: true, tapPhase: 0.5)),
+        Cell(label: "dog tap: retract", species: .dog, pose: DogPose(emotion: .alert, phase: 0.4, tapping: true, tapPhase: 0.85)),
 
         Cell(label: "cat idle", species: .cat, pose: DogPose(emotion: .happy, phase: 0.4)),
         Cell(label: "cat walk", species: .cat, pose: DogPose(emotion: .happy, phase: 0.3, walk: 1)),
@@ -262,6 +265,7 @@ private struct SpeciesCheckView: View {
         Cell(label: "cat groom: paw down", species: .cat, pose: DogPose(emotion: .happy, phase: 0.0, sit: true, grooming: true)),
         Cell(label: "cat sit", species: .cat, pose: DogPose(emotion: .happy, phase: 0.2, sit: true)),
         Cell(label: "cat love", species: .cat, pose: DogPose(emotion: .love, phase: 0.3)),
+        Cell(label: "cat tap: press", species: .cat, pose: DogPose(emotion: .alert, phase: 0.4, tapping: true, tapPhase: 0.5)),
 
         Cell(label: "dog collar t1", species: .dog, pose: DogPose(emotion: .happy, phase: 0.4, collarTier: 1)),
         Cell(label: "dog collar t3", species: .dog, pose: DogPose(emotion: .happy, phase: 0.4, collarTier: 3)),

@@ -75,6 +75,7 @@ final class Pet: ObservableObject {
         case idle, walk, sit, sleep, eat, bark, love, zoom, carried, fall, scratch
         case stretch, sniff
         case groom    // cat's signature move
+        case tap      // reaching out to tap the Reels close button herself
     }
 
     // Vital stats, all 0...1
@@ -96,6 +97,10 @@ final class Pet: ObservableObject {
     @Published var particles: [Particle] = []
     @Published var bubbleText: String? = nil
     @Published var bowl: Double = 0            // 0 = no bowl, else fullness
+    /// Where the little close-button prop floats while she's tapping it, and
+    /// whether it's mid-press right now. SceneView draws it; nil = not showing.
+    @Published var closeButtonAt: CGPoint? = nil
+    @Published var closeButtonPressed: Bool = false
 
     // focus coaching
     @Published private(set) var focusSeconds: Double = 0
@@ -142,16 +147,23 @@ final class Pet: ObservableObject {
     private var speedMultiplier: Double = 1
     private var lastInteraction: Date = Date()
     private var calledOver = false
+    /// How long the reach-tap-retract animation takes, start to finish. `pose`
+    /// divides `actElapsed` by this to get `tapPhase`, and `performCloseTap` times
+    /// the button appearing/pressing off fractions of it, so this is the one place
+    /// that governs the whole gesture's pacing.
+    private let tapDuration: Double = 1.3
 
     var onBark: (() -> Void)?
     var onYip: (() -> Void)?
     var onMunch: (() -> Void)?
     var onWhine: (() -> Void)?
-    /// Settings ▸ Auto-close Reels tabs. Fired from `scold()` once she's already
-    /// warned about a Reels tab and it's still open. Pet has no direct access to
-    /// AppleScript/ActivityMonitor, so this is wired up in App.swift the same way
-    /// the sound hooks above are.
+    /// Settings ▸ Auto-close Reels tabs. Fired from `performCloseTap()` right as her
+    /// paw lands on the button, after the reach animation has played. Pet has no
+    /// direct access to AppleScript/ActivityMonitor, so this is wired up in
+    /// App.swift the same way the sound hooks above are.
     var onCloseReelsTab: (() -> Void)?
+    /// A little UI-click blip for the moment her paw lands on the close button.
+    var onTapSound: (() -> Void)?
 
     // MARK: Derived
 
@@ -164,6 +176,7 @@ final class Pet: ObservableObject {
         case .bark:    return .angry
         case .zoom:    return .playful
         case .love:    return .love
+        case .tap:     return .alert
         default: break
         }
         if petting > 0.15 { return .love }
@@ -222,7 +235,9 @@ final class Pet: ObservableObject {
                 stretching: act == .stretch,
                 sniffing: act == .sniff,
                 grooming: act == .groom,
-                collarTier: collarTier)
+                collarTier: collarTier,
+                tapping: act == .tap,
+                tapPhase: act == .tap ? min(1, actElapsed / tapDuration) : 0)
     }
 
     // sleeping barely moves, so it doesn't need 30fps
@@ -317,7 +332,7 @@ final class Pet: ObservableObject {
         guard Date() > actUntil else { return }
 
         switch act {
-        case .bark, .love, .eat, .zoom, .scratch, .stretch, .sniff, .groom:
+        case .bark, .love, .eat, .zoom, .scratch, .stretch, .sniff, .groom, .tap:
             bowl = 0
             setAct(.idle, for: Double.random(in: 1...3))
             return
@@ -461,6 +476,56 @@ final class Pet: ObservableObject {
     private func performSignatureMove() {
         setAct(.groom, for: 3.2)
         say(Dialogue.groom.randomElement()!, .happy, 2.8)
+    }
+
+    /// Settings ▸ Auto-close Reels tabs: she reaches up, taps a little close button
+    /// that pops in near her paw, and only *then* is `onCloseReelsTab` actually
+    /// fired — so the real tab close lands on the same beat as the visible tap
+    /// instead of happening instantly while she's still mid-reach.
+    private func performCloseTap() {
+        guard act != .tap else { return }
+
+        // macOS Settings ▸ Accessibility ▸ Reduce Motion: skip the reach/press
+        // choreography entirely rather than just speeding it up, since the whole
+        // point of that setting is fewer moving things on screen, not faster ones
+        guard !NSWorkspace.shared.accessibilityDisplayShouldReduceMotion else {
+            say(Dialogue.tapClose.randomElement()!, .alert, 2)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                self?.onCloseReelsTab?()
+            }
+            return
+        }
+
+        setAct(.tap, for: tapDuration)
+        walkTarget = nil
+        say(Dialogue.tapClose.randomElement()!, .alert, tapDuration + 0.5)
+        moodOverride = (.alert, Date().addingTimeInterval(tapDuration))
+
+        // matches Stage.p(158, 26): just past her raised paw, where `tapRaise`
+        // in DogView/CatView actually swings it to at the peak of the reach
+        let target = Stage.p(158, 26)
+        let pressAt = tapDuration * 0.5   // the middle of tapRaise's held peak
+
+        // she looks at the button before her paw ever gets there — PetWindow's
+        // mouse-follow leaves `look` alone while act == .tap, see updateLook()
+        look = CGVector(dx: 0.85, dy: -0.65)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + pressAt * 0.35) { [weak self] in
+            self?.closeButtonAt = target
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + pressAt) { [weak self] in
+            guard let self else { return }
+            self.closeButtonPressed = true
+            self.onTapSound?()
+            self.emit(.sparkle, count: 5, at: target, spread: 26)
+            self.emit(.star, count: 3, at: target, spread: 18)
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + pressAt + 0.18) { [weak self] in
+            guard let self else { return }
+            self.closeButtonPressed = false
+            self.closeButtonAt = nil
+            self.onCloseReelsTab?()
+        }
     }
 
     /// Every XP award goes through here so levelling up is caught in exactly one
@@ -806,9 +871,13 @@ final class Pet: ObservableObject {
 
         // one warning bark first, then: if it's still a Reels tab and she hasn't
         // been left alone, she closes it herself. `== 2` (not `>=`) so this only
-        // ever fires once per escalation streak, not every 25s if it keeps failing
+        // ever fires once per escalation streak, not every 25s if it keeps failing.
+        // Let the bark itself play out for a beat before she launches into the
+        // reach-and-tap animation, instead of the two acts colliding on one frame.
         if scoldCount == 2, Prefs.autoCloseReels, v.ruleName == "Reels & short-form video" {
-            onCloseReelsTab?()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.1) { [weak self] in
+                self?.performCloseTap()
+            }
         }
 
         // escalate: 45s, then 35s, then every 25s until they behave
