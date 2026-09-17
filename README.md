@@ -1,4 +1,5 @@
-# 🐾 Cariberry: a desktop pet for macOS
+# 🐾 Cariberry: a desktop pet by Ranveer Sanghvi
+A custom desktop pet application created by Ranveer Sanghvi (ranu).
 
 A soft, minimal pet who lives at the bottom of your screen. She roams, naps and
 begs for food, and she **watches what you're doing and reacts**. She barks when
