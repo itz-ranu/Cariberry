@@ -16,6 +16,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     let monitor = ActivityMonitor()
     var controller: PetController!
     var menuBar: MenuBarController!
+    var cranberry: CranberryBridge!
 
     func applicationDidFinishLaunching(_ note: Notification) {
         // Dev helper: render the pup's expression sheet to a PNG and quit.
@@ -140,6 +141,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
         pet.onTapSound = { SoundKit.shared.click() }
         monitor.start()
+
+        cranberry = CranberryBridge(pet: pet)
+        cranberry.start()
 
         LaunchAtLogin.syncToStoredPreference()
     }

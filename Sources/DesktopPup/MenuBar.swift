@@ -8,6 +8,7 @@ final class MenuBarController: NSObject, NSMenuDelegate {
     private let monitor: ActivityMonitor
     private var item: NSStatusItem!
     private var refresh: Timer?
+    private var cranberryProcess: Process?
 
     init(pet: Pet, controller: PetController, monitor: ActivityMonitor) {
         self.pet = pet
@@ -70,6 +71,11 @@ final class MenuBarController: NSObject, NSMenuDelegate {
         add(menu, "Pet \(pet.name)", "🫶", #selector(petIt), key: "")
         add(menu, "Come here!", "📣", #selector(come), key: "")
         add(menu, pet.act == .sleep ? "Wake up" : "Nap time", "😴", #selector(nap), key: "")
+
+        menu.addItem(.separator())
+        let cranberryRunning = cranberryProcess?.isRunning == true
+        add(menu, cranberryRunning ? "Stop Cranberry" : "Talk to Cranberry",
+            cranberryRunning ? "🐾" : "💬", #selector(toggleCranberry), key: "")
 
         menu.addItem(.separator())
         header(menu, "Vitals")
@@ -395,6 +401,53 @@ final class MenuBarController: NSObject, NSMenuDelegate {
             Prefs.quietHoursEnd = e
             Prefs.quietHoursEnabled = true
             pet.say("quiet hours set: \(clockLabel(s))–\(clockLabel(e)) 🌙", .neutral, 3)
+        }
+    }
+
+    /// Launches (or stops) the separate `cranberry/` Python service straight
+    /// from the menu, so getting to its chat window never requires opening a
+    /// terminal. `run_cranberry.sh` lives in the source checkout, not inside
+    /// the app bundle, so its path is baked into Info.plist at build time
+    /// (see build.sh) rather than assumed relative to the running binary.
+    @objc private func toggleCranberry() {
+        if let running = cranberryProcess, running.isRunning {
+            running.terminate()
+            cranberryProcess = nil
+            return
+        }
+
+        guard let projectPath = Bundle.main.object(forInfoDictionaryKey: "CranberryProjectPath") as? String else {
+            pet.say("I can't find my own project folder to launch Cranberry from 😟", .worried, 4)
+            return
+        }
+        let script = "\(projectPath)/run_cranberry.sh"
+        guard FileManager.default.fileExists(atPath: script) else {
+            pet.say("run_cranberry.sh is missing from \(projectPath) 😟", .worried, 4)
+            return
+        }
+
+        let process = Process()
+        process.executableURL = URL(fileURLWithPath: "/bin/bash")
+        process.arguments = [script]
+
+        let logPath = NSTemporaryDirectory() + "cranberry.log"
+        FileManager.default.createFile(atPath: logPath, contents: nil)
+        if let handle = FileHandle(forWritingAtPath: logPath) {
+            process.standardOutput = handle
+            process.standardError = handle
+        }
+        process.terminationHandler = { [weak self] _ in
+            Task { @MainActor in
+                if self?.cranberryProcess === process { self?.cranberryProcess = nil }
+            }
+        }
+
+        do {
+            try process.run()
+            cranberryProcess = process
+            pet.say("waking Cranberry up... 🐾 (first launch installs some things, give it a minute)", .curious, 4)
+        } catch {
+            pet.say("couldn't start Cranberry: \(error.localizedDescription) 😟", .worried, 4)
         }
     }
 

@@ -46,6 +46,12 @@ cat > "$APP/Contents/Info.plist" <<PLIST
     <key>NSHighResolutionCapable</key><true/>
     <key>NSAppleEventsUsageDescription</key>
     <string>Cariberry peeks at the page title of your front browser tab so it can bark when you drift into Reels and cheer when you are working.</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Wonders (Cariberry's voice assistant) listens for "Hey Cranberry" so you can talk to her hands-free.</string>
+    <key>NSSpeechRecognitionUsageDescription</key>
+    <string>Wonders transcribes your voice on-device to hear "Hey Cranberry" and whatever you say after it.</string>
+    <key>CranberryProjectPath</key>
+    <string>$(pwd)</string>
 </dict>
 </plist>
 PLIST

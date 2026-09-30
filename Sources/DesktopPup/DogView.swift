@@ -139,8 +139,8 @@ private enum Art {
             let x = mt * mt * p0.x + 2 * mt * t * cp.x + t * t * p1.x
             let y = mt * mt * p0.y + 2 * mt * t * cp.y + t * t * p1.y
             let r = 13.0 - t * 6.0
-            // coatShade -> coatLight (soft caramel to oat milk), interpolated once at launch
-            let c = Color(red: 0.89 + 0.10 * t, green: 0.77 + 0.19 * t, blue: 0.62 + 0.29 * t)
+            // coatShade -> coatLight (soft blue-grey to frosted white), interpolated once at launch
+            let c = Color(red: 0.71 + 0.26 * t, green: 0.77 + 0.21 * t, blue: 0.93 + 0.07 * t)
             out.append((ovalPath(x, y, r * 2, r * 2), c))
         }
         return out
@@ -186,10 +186,11 @@ struct DogView: View {
             draw(ctx)
         }
         .frame(width: Design.width, height: Design.height)
-        .blur(radius: 0.45)
+        .blur(radius: 0.65)
     }
 
-    // her own warm golden-puppy coat, distinct from the other three species
+    // her own pale, soft-focus coat — matches the painterly blue-pup reference,
+    // distinct from the other three species
     private var coatLight: Color { Coat.light(.dog) }
     private var coatMid: Color { Coat.mid(.dog) }
     private var coatShade: Color { Coat.shade(.dog) }

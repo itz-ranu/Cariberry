@@ -53,19 +53,19 @@ enum Dish {
 enum Coat {
     static func light(_ s: Species) -> Color {
         switch s {
-        case .dog: return Color(red: 0.99, green: 0.96, blue: 0.91)   // oat milk
+        case .dog: return Color(red: 0.97, green: 0.98, blue: 1.00)   // frosted white
         case .cat: return Color(red: 0.99, green: 0.97, blue: 0.98)   // soft blush-white
         }
     }
     static func mid(_ s: Species) -> Color {
         switch s {
-        case .dog: return Color(red: 0.96, green: 0.88, blue: 0.76)   // warm sand
+        case .dog: return Color(red: 0.91, green: 0.93, blue: 0.98)   // pale periwinkle
         case .cat: return Color(red: 0.87, green: 0.83, blue: 0.90)   // dusty lilac
         }
     }
     static func shade(_ s: Species) -> Color {
         switch s {
-        case .dog: return Color(red: 0.89, green: 0.77, blue: 0.62)   // soft caramel
+        case .dog: return Color(red: 0.71, green: 0.77, blue: 0.93)   // soft blue-grey
         case .cat: return Color(red: 0.73, green: 0.69, blue: 0.80)   // muted mauve
         }
     }

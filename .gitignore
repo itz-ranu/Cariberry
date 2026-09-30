@@ -68,3 +68,19 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
+
+# Cranberry (the "Hey Cranberry" voice assistant service)
+#
+# The venv and trained weights are both reproducible locally (run_cranberry.sh
+# creates the venv; python -m cranberry.brain.train / audio.train_wake_word
+# produce the weights) and the wake-word clips are your own recorded voice --
+# none of these belong in git.
+cranberry/.venv/
+cranberry/weights/
+cranberry/data/wake/positive/*.wav
+cranberry/data/wake/negative/*.wav
+__pycache__/
+*.py[cod]
+*$py.class
+.vscode/
+
